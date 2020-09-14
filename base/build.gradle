@@ -121,6 +121,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.lib_versions.constraint"
 
     // Google Architecture Component
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.lib_versions.arch"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lib_versions.arch"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.lib_versions.arch"
 
@@ -155,6 +156,10 @@ dependencies {
     releaseImplementation "com.readystatesoftware.chuck:library-no-op:$rootProject.ext.lib_versions.chuck"
 
     debugImplementation "androidx.multidex:multidex:$rootProject.ext.lib_versions.multidex"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.lib_versions.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.ext.lib_versions.coroutines"
 
     //Rx
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.lib_versions.rxjava"

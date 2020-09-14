@@ -11,6 +11,7 @@ import dagger.Provides
 import com.tuanhv.mvvmarch.base.BuildConfig
 import com.tuanhv.mvvmarch.base.R
 import com.tuanhv.mvvmarch.base.api.auth.AuthApi
+import com.tuanhv.mvvmarch.base.api.common.coroutines.NetworkResponseAdapterFactory
 import com.tuanhv.mvvmarch.base.api.common.mock.MockInterceptor
 import com.tuanhv.mvvmarch.base.api.post.PostApi
 import com.tuanhv.mvvmarch.base.api.user.UserApi
@@ -155,7 +156,7 @@ class ApiModule {
                 .client(okHttpClient)
                 .baseUrl(context.getString(R.string.api_end_point))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(NetworkResponseAdapterFactory())
                 .build()
     }
 
