@@ -8,7 +8,6 @@ import com.tuanhv.mvvmarch.base.platform.BaseApplication
 import com.tuanhv.mvvmarch.base.preferences.sharedPrefsModule
 import com.tuanhv.mvvmarch.base.repository.repositoryModule
 import com.tuanhv.mvvmarch.base.util.DevUtils
-import com.tuanhv.mvvmarch.base.util.rx.rxModule
 import com.tuanhv.mvvmarch.sample.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -35,7 +34,6 @@ class SampleApplication : BaseApplication() {
             // module list
             modules(
                     appModule,
-                    rxModule,
                     sharedPrefsModule,
                     databaseModule,
                     networkModule,

@@ -1,8 +1,9 @@
 package com.tuanhv.mvvmarch.base.api.post
 
+import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.PaginatedResponse
+import com.tuanhv.mvvmarch.base.api.common.coroutines.NetworkResponse
 import com.tuanhv.mvvmarch.base.entity.Post
-import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,9 +14,9 @@ import retrofit2.http.Query
 interface PostApi {
 
     @GET("/api/v1/get_posts.seam")
-    fun getPosts(
+    suspend fun getPosts(
             @Query("limit") limit: Int,
             @Query("after_id") afterId: Long
-    ): Observable<PaginatedResponse<Post>>
+    ): NetworkResponse<PaginatedResponse<Post>, ErrorState>
 
 }

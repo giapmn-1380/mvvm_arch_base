@@ -1,11 +1,10 @@
 package com.tuanhv.mvvmarch.base.repository.post
 
-import com.tuanhv.mvvmarch.base.api.common.rxjava.Result
 import com.tuanhv.mvvmarch.base.api.post.PostsRemoteDataSource
 import com.tuanhv.mvvmarch.base.db.post.PostsLocalDataSource
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities
 import com.tuanhv.mvvmarch.base.entity.Post
-import io.reactivex.Observable
+import com.tuanhv.mvvmarch.base.repository.common.Resource
 
 /**
  * Created by hoang.van.tuan on 2/2/18.
@@ -15,7 +14,7 @@ class PostRepositoryImpl constructor(
         private val postsLocalDataSource: PostsLocalDataSource
 ) : PostRepository {
 
-    override fun getPosts(afterId: Long): Observable<Result<PaginatedEntities<Post>>> {
+    override suspend fun getPosts(afterId: Long): Resource<PaginatedEntities<Post>> {
         return postsRemoteDataSource.getPosts(afterId)
     }
 

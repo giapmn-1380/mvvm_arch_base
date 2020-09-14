@@ -20,6 +20,7 @@ import com.tuanhv.mvvmarch.base.api.ApiModule.providePostApi
 import com.tuanhv.mvvmarch.base.api.ApiModule.provideRestAdapter
 import com.tuanhv.mvvmarch.base.api.ApiModule.provideUserApi
 import com.tuanhv.mvvmarch.base.api.auth.AuthApi
+import com.tuanhv.mvvmarch.base.api.common.coroutines.NetworkResponseAdapterFactory
 import com.tuanhv.mvvmarch.base.api.common.mock.MockInterceptor
 import com.tuanhv.mvvmarch.base.api.post.PostApi
 import com.tuanhv.mvvmarch.base.api.user.UserApi
@@ -31,7 +32,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -164,7 +164,7 @@ object ApiModule : KoinComponent {
                 .client(okHttpClient)
                 .baseUrl(context.getString(R.string.api_end_point))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(NetworkResponseAdapterFactory())
                 .build()
     }
 
@@ -177,7 +177,7 @@ object ApiModule : KoinComponent {
                 .client(okHttpClient)
                 .baseUrl(context.getString(R.string.api_end_point))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(NetworkResponseAdapterFactory())
                 .build()
     }
 

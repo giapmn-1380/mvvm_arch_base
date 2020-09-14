@@ -3,31 +3,23 @@ package com.tuanhv.mvvmarch.base.api.auth
 import com.tuanhv.mvvmarch.base.api.auth.request.LoginRequest
 import com.tuanhv.mvvmarch.base.api.auth.request.LogoutRequest
 import com.tuanhv.mvvmarch.base.api.common.SuccessState
-import com.tuanhv.mvvmarch.base.api.common.rxjava.Result
-import com.tuanhv.mvvmarch.base.api.common.rxjava.retrofitResultResponseToResult
+import com.tuanhv.mvvmarch.base.api.common.coroutines.BaseRemoteDataSource
 import com.tuanhv.mvvmarch.base.entity.OauthToken
-import com.tuanhv.mvvmarch.base.util.rx.RxSchedulers
-import io.reactivex.Observable
+import com.tuanhv.mvvmarch.base.repository.common.Resource
 
 /**
  * Created by hoang.van.tuan on 9/19/20.
  */
 class AuthRemoteDataSource constructor(
-        private val authApi: AuthApi,
-        private val rxSchedulers: RxSchedulers
-) {
+        private val authApi: AuthApi
+) : BaseRemoteDataSource() {
 
-    fun login(email: String, password: String): Observable<Result<OauthToken>> {
-        return authApi.login(LoginRequest(email,password))
-                .retrofitResultResponseToResult()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.androidThread())
+    suspend fun login(email: String, password: String): Resource<OauthToken> {
+        return getResultFromResultResponse { authApi.login(LoginRequest(email, password)) }
     }
 
-    fun logout(fcmToken: String): Observable<Result<SuccessState>> {
-        return authApi.logout(LogoutRequest(fcmToken))
-                .retrofitResultResponseToResult()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.androidThread())
+    suspend fun logout(fcmToken: String): Resource<SuccessState> {
+        return getResultFromResultResponse { authApi.logout(LogoutRequest(fcmToken)) }
     }
+
 }
