@@ -8,6 +8,8 @@ enum class ErrorStatus(val code: Int, val message: String) {
 
     COMMON(500, "Common Error"),
     TIME_OUT(501, "Timeout Error"),
-    UNKNOWN_HOST(502, "Unknown host Error")
+    UNKNOWN_HOST(502, "Unknown host Error"),
+    NETWORK_ERROR(503, "Network Error"),
+    UNKNOWN_ERROR(504, "Unknown Error")
 
 }

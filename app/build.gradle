@@ -131,6 +131,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.lib_versions.constraint"
 
     // Google Architecture Component
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.lib_versions.arch"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.lib_versions.arch"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lib_versions.arch"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.lib_versions.arch"
 
@@ -153,7 +155,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.lib_versions.okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.lib_versions.okhttp"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.lib_versions.retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.lib_versions.retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.lib_versions.retrofit"
     implementation "com.squareup.moshi:moshi-adapters:$rootProject.ext.lib_versions.moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.ext.lib_versions.moshi"
@@ -166,10 +167,9 @@ dependencies {
 
     debugImplementation "androidx.multidex:multidex:$rootProject.ext.lib_versions.multidex"
 
-    //Rx
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.lib_versions.rxjava"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.lib_versions.rxandroid"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.ext.lib_versions.rxkotlin"
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.lib_versions.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.ext.lib_versions.coroutines"
 
     //UI
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.lib_versions.glide"

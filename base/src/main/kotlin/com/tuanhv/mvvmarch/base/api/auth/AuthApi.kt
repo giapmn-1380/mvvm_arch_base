@@ -2,10 +2,11 @@ package com.tuanhv.mvvmarch.base.api.auth
 
 import com.tuanhv.mvvmarch.base.api.auth.request.LoginRequest
 import com.tuanhv.mvvmarch.base.api.auth.request.LogoutRequest
+import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.ResultResponse
 import com.tuanhv.mvvmarch.base.api.common.SuccessState
+import com.tuanhv.mvvmarch.base.api.common.coroutines.NetworkResponse
 import com.tuanhv.mvvmarch.base.entity.OauthToken
-import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -15,13 +16,13 @@ import retrofit2.http.POST
 interface AuthApi {
 
     @POST("/api/v1/login.seam")
-    fun login(
+    suspend fun login(
             @Body loginRequest: LoginRequest
-    ): Observable<ResultResponse<OauthToken>>
+    ): NetworkResponse<ResultResponse<OauthToken>, ErrorState>
 
     @POST("/api/v1/logout.seam")
-    fun logout(
+    suspend fun logout(
             @Body logoutRequest: LogoutRequest
-    ): Observable<ResultResponse<SuccessState>>
+    ): NetworkResponse<ResultResponse<SuccessState>, ErrorState>
 
 }

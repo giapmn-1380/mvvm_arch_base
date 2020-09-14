@@ -2,10 +2,9 @@ package com.tuanhv.mvvmarch.base.repository.auth
 
 import com.tuanhv.mvvmarch.base.api.auth.AuthRemoteDataSource
 import com.tuanhv.mvvmarch.base.api.common.SuccessState
-import com.tuanhv.mvvmarch.base.api.common.rxjava.Result
 import com.tuanhv.mvvmarch.base.entity.OauthToken
 import com.tuanhv.mvvmarch.base.preferences.auth.AuthSharedPrefsDataSource
-import io.reactivex.Observable
+import com.tuanhv.mvvmarch.base.repository.common.Resource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,25 +17,25 @@ class AuthRepositoryImpl @Inject constructor(
         private val authSharedPrefsDataSource: AuthSharedPrefsDataSource
 ) : AuthRepository {
 
-    override fun login(email: String, password: String): Observable<Result<OauthToken>> {
+    override suspend fun login(email: String, password: String): Resource<OauthToken> {
         return authRemoteDataSource.login(email, password)
-                .doOnNext {
-                    it.data?.let { authToken ->
-                        authSharedPrefsDataSource.saveOauthToken(authToken)
-                    }
-                }
+    }
+
+    override fun saveOauthToken(authToken: OauthToken) {
+        authSharedPrefsDataSource.saveOauthToken(authToken)
     }
 
     override fun getOauthToken(): OauthToken? {
         return authSharedPrefsDataSource.getOauthToken()
     }
 
-    override fun logout(): Observable<Result<SuccessState>> {
+    override suspend fun logout(): Resource<SuccessState> {
         val accessToken = authSharedPrefsDataSource.getAccessToken()
         return authRemoteDataSource.logout(accessToken)
-                .doOnNext {
-                    authSharedPrefsDataSource.clearOauthToken()
-                }
+    }
+
+    override fun clearOauthToken() {
+        authSharedPrefsDataSource.clearOauthToken()
     }
 
 }

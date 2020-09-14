@@ -1,11 +1,9 @@
 package com.tuanhv.mvvmarch.base.api.post
 
-import com.tuanhv.mvvmarch.base.api.common.rxjava.Result
-import com.tuanhv.mvvmarch.base.api.common.rxjava.retrofitPaginatedResponseToResult
+import com.tuanhv.mvvmarch.base.api.common.coroutines.BaseRemoteDataSource
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities
 import com.tuanhv.mvvmarch.base.entity.Post
-import com.tuanhv.mvvmarch.base.util.rx.RxSchedulers
-import io.reactivex.Observable
+import com.tuanhv.mvvmarch.base.repository.common.Resource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,19 +12,15 @@ import javax.inject.Singleton
  */
 @Singleton
 class PostsRemoteDataSource @Inject constructor(
-        private val postApi: PostApi,
-        private val rxSchedulers: RxSchedulers
-) {
+        private val postApi: PostApi
+) : BaseRemoteDataSource() {
 
     companion object {
         private const val REQUEST_POSTS_LIMIT = 10
     }
 
-    fun getPosts(afterId: Long): Observable<Result<PaginatedEntities<Post>>> {
-        return postApi.getPosts(REQUEST_POSTS_LIMIT, afterId)
-                .retrofitPaginatedResponseToResult()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.androidThread())
+    suspend fun getPosts(afterId: Long): Resource<PaginatedEntities<Post>> {
+        return getResultFromPaginatedResponse { postApi.getPosts(REQUEST_POSTS_LIMIT, afterId) }
     }
 
 }

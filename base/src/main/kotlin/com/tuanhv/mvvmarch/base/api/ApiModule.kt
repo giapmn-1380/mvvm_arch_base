@@ -11,6 +11,7 @@ import dagger.Provides
 import com.tuanhv.mvvmarch.base.BuildConfig
 import com.tuanhv.mvvmarch.base.R
 import com.tuanhv.mvvmarch.base.api.auth.AuthApi
+import com.tuanhv.mvvmarch.base.api.common.coroutines.NetworkResponseAdapterFactory
 import com.tuanhv.mvvmarch.base.api.common.mock.MockInterceptor
 import com.tuanhv.mvvmarch.base.api.post.PostApi
 import com.tuanhv.mvvmarch.base.api.user.UserApi
@@ -22,7 +23,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -155,7 +155,7 @@ class ApiModule {
                 .client(okHttpClient)
                 .baseUrl(context.getString(R.string.api_end_point))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(NetworkResponseAdapterFactory())
                 .build()
     }
 
@@ -171,7 +171,7 @@ class ApiModule {
                 .client(okHttpClient)
                 .baseUrl(context.getString(R.string.api_end_point))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(NetworkResponseAdapterFactory())
                 .build()
     }
 
