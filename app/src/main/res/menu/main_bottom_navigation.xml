@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/actionOne"
+        android:icon="@drawable/ic_explore_light_blue_800_24dp"
+        android:title="@string/one_toolbar_title" />
+
+    <item
+        android:id="@id/actionTwo"
+        android:icon="@drawable/ic_favorite_light_blue_800_24dp"
+        android:title="@string/two_toolbar_title" />
+
+</menu>
