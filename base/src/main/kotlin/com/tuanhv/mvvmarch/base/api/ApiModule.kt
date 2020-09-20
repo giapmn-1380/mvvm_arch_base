@@ -16,6 +16,9 @@ import com.tuanhv.mvvmarch.base.api.post.PostApi
 import com.tuanhv.mvvmarch.base.api.user.UserApi
 import com.tuanhv.mvvmarch.base.injection.BaseSourceApi
 import com.tuanhv.mvvmarch.base.preferences.auth.AuthSharedPrefs
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +32,7 @@ import javax.inject.Singleton
  * Created by hoang.van.tuan on 2/1/18.
  */
 @Module
+@InstallIn(ApplicationComponent::class)
 class ApiModule {
 
     companion object {
@@ -92,7 +96,7 @@ class ApiModule {
     @Singleton
     @BaseSourceApi("Mock")
     fun provideMockOkHttpClient(
-            context: Context,
+            @ApplicationContext context: Context,
             headersInterceptor: Interceptor,
             loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
@@ -114,7 +118,7 @@ class ApiModule {
     @Singleton
     @BaseSourceApi("Main")
     fun provideOkHttpClient(
-            context: Context,
+            @ApplicationContext context: Context,
             headersInterceptor: Interceptor,
             loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
@@ -143,7 +147,7 @@ class ApiModule {
     @Singleton
     @BaseSourceApi("Mock")
     fun provideMockRestAdapter(
-            context: Context,
+            @ApplicationContext context: Context,
             @BaseSourceApi("Mock") okHttpClient: OkHttpClient,
             moshi: Moshi
     ): Retrofit {
@@ -159,7 +163,7 @@ class ApiModule {
     @Singleton
     @BaseSourceApi("Main")
     fun provideRestAdapter(
-            context: Context,
+            @ApplicationContext context: Context,
             @BaseSourceApi("Main") okHttpClient: OkHttpClient,
             moshi: Moshi
     ): Retrofit {

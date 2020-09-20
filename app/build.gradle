@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -119,6 +120,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.lib_versions.core_ktx"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.ext.lib_versions.fragment_ktx"
 
     // Support
     implementation "androidx.appcompat:appcompat:$rootProject.ext.lib_versions.appcompat"
@@ -140,12 +142,12 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.ext.lib_versions.room"
     kapt "androidx.room:room-compiler:$rootProject.ext.lib_versions.room"
 
-    // DI
-    implementation "com.google.dagger:dagger:$rootProject.ext.lib_versions.dagger"
-    implementation "com.google.dagger:dagger-android:$rootProject.ext.lib_versions.dagger_android"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.ext.lib_versions.dagger_android"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.lib_versions.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.ext.lib_versions.dagger"
+    // Hilt dependencies
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // Hilt ViewModel extension
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.ext.lib_versions.hilt_jetpack"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.ext.lib_versions.hilt_jetpack"
 
     // API
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.lib_versions.okhttp"

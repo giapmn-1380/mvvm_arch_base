@@ -2,26 +2,24 @@ package com.tuanhv.mvvmarch.sample.ui.main.fragment.homefeed
 
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.rxjava.RetrofitObserver
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities.Companion.REQUEST_ID_FIRST_TIME
 import com.tuanhv.mvvmarch.base.entity.Post
-import com.tuanhv.mvvmarch.base.injection.PerActivity
-import com.tuanhv.mvvmarch.base.repository.post.PostsRepository
+import com.tuanhv.mvvmarch.base.repository.post.PostRepository
 import com.tuanhv.mvvmarch.base.ui.SingleLiveData
 import com.tuanhv.mvvmarch.base.util.extension.plusAssign
 import com.tuanhv.mvvmarch.sample.ui.main.adapter.helper.OnLoadMoreViewModel
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 9/14/20.
  */
-@PerActivity
-class HomeFeedViewModel @Inject constructor(
-        private val postsRepository: PostsRepository
+class HomeFeedViewModel @ViewModelInject constructor(
+        private val postRepository: PostRepository
 ) : ViewModel(), OnLoadMoreViewModel {
 
     companion object {
@@ -57,7 +55,7 @@ class HomeFeedViewModel @Inject constructor(
         } else {
             isLoadMoreFail.set(false)
         }
-        compositeDisposable += postsRepository
+        compositeDisposable += postRepository
                 .getPosts(afterId)
                 .subscribeWith(PostsObserver(afterId))
     }

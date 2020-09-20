@@ -6,7 +6,7 @@ An Android project with MVVM architecture + repository pattern ( with mappers) w
 * [Architecture Components](https://developer.android.com/topic/libraries/architecture/): ViewModel, LiveData, Navigation, Room
 * [Data binding](https://developer.android.com/topic/libraries/data-binding/)
 * [RxJava 2](https://github.com/ReactiveX/RxJava) + [RxAndroid](https://github.com/ReactiveX/RxAndroid)
-* [Dagger 2](https://github.com/google/dagger)
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 * [Retrofit](https://github.com/square/retrofit) + [OkHttp](https://github.com/square/okhttp)
 * UI: RecyclerView, CardView, ConstraintLayout.
 * Unit Testing: [JUnit4](https://github.com/junit-team/junit4) + [Mockito](https://github.com/mockito/mockito)

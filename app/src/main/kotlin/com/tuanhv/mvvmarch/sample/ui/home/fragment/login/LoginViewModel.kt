@@ -2,22 +2,20 @@ package com.tuanhv.mvvmarch.sample.ui.home.fragment.login
 
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.rxjava.RetrofitObserver
 import com.tuanhv.mvvmarch.base.entity.OauthToken
-import com.tuanhv.mvvmarch.base.injection.PerFragment
 import com.tuanhv.mvvmarch.base.repository.auth.AuthRepository
 import com.tuanhv.mvvmarch.base.ui.SingleLiveData
 import com.tuanhv.mvvmarch.base.util.extension.plusAssign
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-@PerFragment
-class LoginViewModel @Inject constructor(
+class LoginViewModel @ViewModelInject constructor(
         private val authRepository: AuthRepository
 ) : ViewModel() {
 

@@ -1,27 +1,24 @@
 package com.tuanhv.mvvmarch.sample.ui.home
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import com.tuanhv.mvvmarch.base.platform.AppManager
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.ActivityHomeBinding
-import com.tuanhv.mvvmarch.sample.platform.SampleApplication
-import com.tuanhv.mvvmarch.base.platform.AppManager
-import com.tuanhv.mvvmarch.base.ui.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-class HomeActivity : BaseActivity(), HasSupportFragmentInjector {
+@AndroidEntryPoint
+class HomeActivity : AppCompatActivity() {
 
     companion object {
 
@@ -30,36 +27,16 @@ class HomeActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var appManager: AppManager
 
     private lateinit var homeBinding: ActivityHomeBinding
-    private lateinit var homeViewModel: HomeViewModel
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingAndroidInjector
-    }
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         initiateToolbar()
-    }
-
-    override fun setupActivityComponent() {
-        SampleApplication.get(this)
-                .appComponent
-                .homeBuilder()
-                .activity(this)
-                .build()
-                .inject(this)
     }
 
     private fun initiateToolbar() {

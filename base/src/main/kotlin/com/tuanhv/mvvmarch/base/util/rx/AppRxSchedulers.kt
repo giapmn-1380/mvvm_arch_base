@@ -5,12 +5,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-
-class AppRxSchedulers : RxSchedulers {
+@Singleton
+class AppRxSchedulers @Inject constructor() : RxSchedulers {
 
     companion object {
 

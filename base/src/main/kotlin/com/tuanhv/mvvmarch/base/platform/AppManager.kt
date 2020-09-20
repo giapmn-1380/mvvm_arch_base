@@ -3,15 +3,15 @@ package com.tuanhv.mvvmarch.base.platform
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.SystemClock
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-
 @Singleton
-class AppManager @Inject constructor(private var applicationContext: Context) {
+class AppManager @Inject constructor(@ApplicationContext private val context: Context) {
 
     companion object {
         private const val THRESHOLD_DOUBLE_TIME = 500
@@ -25,7 +25,7 @@ class AppManager @Inject constructor(private var applicationContext: Context) {
 
     val isConnectedToInternet: Boolean
         get() {
-            val conManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE)
+            val conManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
                     as ConnectivityManager
 
             val ni = conManager.activeNetworkInfo

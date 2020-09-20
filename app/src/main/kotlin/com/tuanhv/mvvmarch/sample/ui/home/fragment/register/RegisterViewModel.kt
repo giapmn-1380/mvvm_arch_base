@@ -1,14 +1,11 @@
 package com.tuanhv.mvvmarch.sample.ui.home.fragment.register
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import com.tuanhv.mvvmarch.base.injection.PerActivity
-import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-
-@PerActivity
-class RegisterViewModel @Inject constructor() : ViewModel() {
+class RegisterViewModel @ViewModelInject constructor() : ViewModel() {
 
 }

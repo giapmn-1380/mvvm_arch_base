@@ -1,28 +1,25 @@
 package com.tuanhv.mvvmarch.sample.ui.main
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import com.tuanhv.mvvmarch.base.platform.AppManager
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.ActivityMainBinding
-import com.tuanhv.mvvmarch.sample.platform.SampleApplication
-import com.tuanhv.mvvmarch.base.platform.AppManager
-import com.tuanhv.mvvmarch.base.ui.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-class MainActivity : BaseActivity(), HasSupportFragmentInjector {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     companion object {
 
@@ -31,42 +28,18 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var appManager: AppManager
 
     private lateinit var mainBinding: ActivityMainBinding
 
-    private lateinit var mainViewModel: MainViewModel
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingAndroidInjector
-    }
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         initiateToolbar()
         setupNavigation()
-    }
-
-    override fun setupActivityComponent() {
-        SampleApplication.get(this).getUserComponent()
-                ?.mainBuilder()
-                ?.activity(this)
-                ?.build()
-                ?.inject(this)
-                ?: apply {
-                    Navigation.findNavController(this, R.id.nav_host_main_fragment)
-                            .navigate(R.id.backToSplash)
-                    finish()
-                }
     }
 
     private fun initiateToolbar() {

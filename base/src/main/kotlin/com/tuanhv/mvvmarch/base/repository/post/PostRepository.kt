@@ -8,8 +8,13 @@ import io.reactivex.Observable
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-interface PostsDataSource {
+interface PostRepository {
 
+    /**
+     *  Fetch Posts from Network when paging.
+     *
+     *  @param afterId (required)
+     **/
     fun getPosts(afterId: Long): Observable<Result<PaginatedEntities<Post>>>
 
 }

@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentSplashNavBinding
-import com.tuanhv.mvvmarch.base.ui.BaseFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-
-class SplashNavFragment @Inject constructor() : BaseFragment() {
+@AndroidEntryPoint
+class SplashNavFragment : Fragment() {
 
     private lateinit var splashNavBinding: FragmentSplashNavBinding
 

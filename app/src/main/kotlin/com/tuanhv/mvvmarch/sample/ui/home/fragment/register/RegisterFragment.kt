@@ -5,19 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentRegisterBinding
-import com.tuanhv.mvvmarch.base.ui.BaseFragment
 import com.tuanhv.mvvmarch.sample.ui.home.HomeActivity
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-class RegisterFragment @Inject constructor() : BaseFragment() {
-
-    @Inject
-    lateinit var homeActivity: HomeActivity
+@AndroidEntryPoint
+class RegisterFragment : Fragment() {
 
     private lateinit var registerBinding: FragmentRegisterBinding
 
@@ -29,7 +27,7 @@ class RegisterFragment @Inject constructor() : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        homeActivity.updateToolbar()
+        (activity as HomeActivity).updateToolbar()
     }
 
 }

@@ -1,6 +1,7 @@
 package com.tuanhv.mvvmarch.base.preferences
 
-import android.content.SharedPreferences
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -8,9 +9,9 @@ import javax.inject.Singleton
  * Created by hoang.van.tuan on 9/19/20.
  */
 @Singleton
-class SharedPrefsApi @Inject constructor(
-        private val sharedPreferences: SharedPreferences
-) {
+class SharedPrefsApi @Inject constructor(@ApplicationContext context: Context) {
+
+    private val sharedPreferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 
     fun set(key: String, value: String) =
             sharedPreferences.edit().apply { putString(key, value) }.apply()

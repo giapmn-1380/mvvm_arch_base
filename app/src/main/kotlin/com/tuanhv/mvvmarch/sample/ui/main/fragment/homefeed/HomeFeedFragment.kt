@@ -5,25 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities.Companion.REQUEST_ID_FIRST_TIME
 import com.tuanhv.mvvmarch.base.entity.Post
 import com.tuanhv.mvvmarch.base.platform.AppManager
-import com.tuanhv.mvvmarch.base.ui.BaseFragment
 import com.tuanhv.mvvmarch.base.ui.common.LoadMoreSimpleAdapter
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentHomeFeedBinding
 import com.tuanhv.mvvmarch.sample.ui.main.MainActivity
 import com.tuanhv.mvvmarch.sample.ui.main.MainViewModel
 import com.tuanhv.mvvmarch.sample.ui.main.fragment.homefeed.adapter.PostAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Created by hoang.van.tuan on 9/14/20.
  */
-class HomeFeedFragment @Inject constructor() : BaseFragment(),
+@AndroidEntryPoint
+class HomeFeedFragment : Fragment(),
         PostAdapter.OnItemClickListener, LoadMoreSimpleAdapter.OnLoadMoreListener {
 
     companion object {
@@ -31,17 +34,12 @@ class HomeFeedFragment @Inject constructor() : BaseFragment(),
     }
 
     @Inject
-    lateinit var mainActivity: MainActivity
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var appManager: AppManager
 
     private lateinit var homeFeedBinding: FragmentHomeFeedBinding
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var homeFeedViewModel: HomeFeedViewModel
+
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val homeFeedViewModel: HomeFeedViewModel by viewModels()
 
     private lateinit var postAdapter: PostAdapter
 
@@ -52,10 +50,8 @@ class HomeFeedFragment @Inject constructor() : BaseFragment(),
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mainViewModel = ViewModelProvider(mainActivity, viewModelFactory).get(MainViewModel::class.java)
-        homeFeedViewModel = ViewModelProvider(mainActivity, viewModelFactory).get(HomeFeedViewModel::class.java)
 
-        mainActivity.updateToolbar()
+        (activity as MainActivity).updateToolbar()
 
         initiateView()
         handleObservable()
