@@ -34,7 +34,7 @@ ext {
             retrofit      : '2.9.0',
             moshi         : '1.9.3',
             okhttp        : '4.4.0',
-            hilt_jetpack  : '1.0.0-alpha02',
+            koin          : '2.1.6',
             estetho       : '1.5.1',
             glide         : '4.11.0',
             // debug

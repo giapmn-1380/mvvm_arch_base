@@ -6,14 +6,11 @@ import com.tuanhv.mvvmarch.base.entity.PaginatedEntities
 import com.tuanhv.mvvmarch.base.entity.Post
 import com.tuanhv.mvvmarch.base.util.rx.RxSchedulers
 import io.reactivex.Observable
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-@Singleton
-class PostsRemoteDataSource @Inject constructor(
+class PostsRemoteDataSource constructor(
         private val postApi: PostApi,
         private val rxSchedulers: RxSchedulers
 ) {

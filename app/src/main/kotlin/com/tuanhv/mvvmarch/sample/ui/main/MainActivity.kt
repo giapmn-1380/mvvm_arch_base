@@ -3,7 +3,6 @@ package com.tuanhv.mvvmarch.sample.ui.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
@@ -11,14 +10,13 @@ import androidx.navigation.ui.NavigationUI
 import com.tuanhv.mvvmarch.base.platform.AppManager
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -27,12 +25,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Inject
-    lateinit var appManager: AppManager
+    private val appManager: AppManager by inject()
 
     private lateinit var mainBinding: ActivityMainBinding
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

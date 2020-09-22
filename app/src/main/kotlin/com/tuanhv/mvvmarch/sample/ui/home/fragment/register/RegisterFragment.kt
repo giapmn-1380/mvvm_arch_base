@@ -9,13 +9,17 @@ import androidx.fragment.app.Fragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentRegisterBinding
 import com.tuanhv.mvvmarch.sample.ui.home.HomeActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.tuanhv.mvvmarch.sample.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-@AndroidEntryPoint
 class RegisterFragment : Fragment() {
+
+    private val loginViewModel: RegisterViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
 
     private lateinit var registerBinding: FragmentRegisterBinding
 

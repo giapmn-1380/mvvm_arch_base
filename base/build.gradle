@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -132,12 +131,10 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.ext.lib_versions.room"
     kapt "androidx.room:room-compiler:$rootProject.ext.lib_versions.room"
 
-    // Hilt dependencies
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    // Hilt ViewModel extension
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.ext.lib_versions.hilt_jetpack"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.ext.lib_versions.hilt_jetpack"
+    // Koin
+    implementation "org.koin:koin-android:$rootProject.ext.lib_versions.koin"
+    implementation "org.koin:koin-androidx-scope:$rootProject.ext.lib_versions.koin"
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.ext.lib_versions.koin"
 
     // API
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.lib_versions.okhttp"

@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentMainNavBinding
 import com.tuanhv.mvvmarch.sample.ui.main.MainActivity
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-@AndroidEntryPoint
 class MainNavFragment : Fragment() {
 
     private lateinit var mainNavBinding: FragmentMainNavBinding

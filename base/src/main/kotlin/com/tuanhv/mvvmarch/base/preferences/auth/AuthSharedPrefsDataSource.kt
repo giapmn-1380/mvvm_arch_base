@@ -2,14 +2,11 @@ package com.tuanhv.mvvmarch.base.preferences.auth
 
 import com.tuanhv.mvvmarch.base.entity.OauthToken
 import com.tuanhv.mvvmarch.base.preferences.SharedPrefsApi
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-@Singleton
-class AuthSharedPrefsDataSource @Inject constructor(
+class AuthSharedPrefsDataSource constructor(
         private val sharedPrefsApi: SharedPrefsApi
 ) : AuthSharedPrefs {
 

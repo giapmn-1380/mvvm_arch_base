@@ -2,7 +2,6 @@ package com.tuanhv.mvvmarch.sample.ui.main.fragment.setting
 
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.SuccessState
@@ -15,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-class SettingViewModel @ViewModelInject constructor(
+class SettingViewModel constructor(
         private val authRepository: AuthRepository
 ) : ViewModel() {
 

@@ -3,7 +3,6 @@ package com.tuanhv.mvvmarch.sample.ui.home
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
@@ -11,13 +10,12 @@ import androidx.navigation.findNavController
 import com.tuanhv.mvvmarch.base.platform.AppManager
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.ActivityHomeBinding
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     companion object {
@@ -26,11 +24,10 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    @Inject
-    lateinit var appManager: AppManager
+    private val appManager: AppManager by inject()
 
     private lateinit var homeBinding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

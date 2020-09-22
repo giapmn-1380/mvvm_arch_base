@@ -2,7 +2,6 @@ package com.tuanhv.mvvmarch.sample.ui.main.fragment.homefeed
 
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.rxjava.RetrofitObserver
@@ -18,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable
 /**
  * Created by hoang.van.tuan on 9/14/20.
  */
-class HomeFeedViewModel @ViewModelInject constructor(
+class HomeFeedViewModel constructor(
         private val postRepository: PostRepository
 ) : ViewModel(), OnLoadMoreViewModel {
 

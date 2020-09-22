@@ -6,14 +6,11 @@ import com.tuanhv.mvvmarch.base.db.post.PostsLocalDataSource
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities
 import com.tuanhv.mvvmarch.base.entity.Post
 import io.reactivex.Observable
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-@Singleton
-class PostRepositoryImpl @Inject constructor(
+class PostRepositoryImpl constructor(
         private val postsRemoteDataSource: PostsRemoteDataSource,
         private val postsLocalDataSource: PostsLocalDataSource
 ) : PostRepository {

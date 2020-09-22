@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentSplashNavBinding
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-@AndroidEntryPoint
 class SplashNavFragment : Fragment() {
 
     private lateinit var splashNavBinding: FragmentSplashNavBinding

@@ -6,40 +6,61 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.readystatesoftware.chuck.ChuckInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dagger.Module
-import dagger.Provides
 import com.tuanhv.mvvmarch.base.BuildConfig
 import com.tuanhv.mvvmarch.base.R
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideAuthApi
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideHeadersInterceptor
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideLoggingInterceptor
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideMockOkHttpClient
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideMockRestAdapter
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideMoshi
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideOkHttpCache
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideOkHttpClient
+import com.tuanhv.mvvmarch.base.api.ApiModule.providePostApi
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideRestAdapter
+import com.tuanhv.mvvmarch.base.api.ApiModule.provideUserApi
 import com.tuanhv.mvvmarch.base.api.auth.AuthApi
 import com.tuanhv.mvvmarch.base.api.common.mock.MockInterceptor
 import com.tuanhv.mvvmarch.base.api.post.PostApi
 import com.tuanhv.mvvmarch.base.api.user.UserApi
-import com.tuanhv.mvvmarch.base.injection.BaseSourceApi
 import com.tuanhv.mvvmarch.base.preferences.auth.AuthSharedPrefs
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.KoinComponent
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 2/1/18.
  */
-@Module
-@InstallIn(ApplicationComponent::class)
-class ApiModule {
+val networkModule = module {
+    single { provideOkHttpCache(androidContext()) }
+    single { provideLoggingInterceptor() }
+    single { provideHeadersInterceptor(get()) }
 
-    companion object {
-        const val CACHE_SIZE: Long = 10 * 1024 * 1024
-        const val CACHE_TIME_SEC = 30
-        const val TIME_OUT: Long = 60
-    }
+    single(named("mock")) { provideMockOkHttpClient(androidContext(), get(), get(), get()) }
+    single(named("main")) { provideOkHttpClient(androidContext(), get(), get(), get()) }
+
+    single { provideMoshi() }
+    single(named("mock")) { provideMockRestAdapter(androidContext(), get(named("mock")), get()) }
+    single(named("main")) { provideRestAdapter(androidContext(), get(named("main")), get()) }
+
+    single { provideAuthApi(get(named("mock"))) }
+    single { providePostApi(get(named("mock"))) }
+    single { provideUserApi(get(named("main"))) }
+}
+
+object ApiModule : KoinComponent {
+
+    private const val CACHE_SIZE: Long = 10 * 1024 * 1024
+    private const val CACHE_TIME_SEC = 30
+    private const val TIME_OUT: Long = 60
 
     private val cacheInterceptor: Interceptor
         get() = object : Interceptor {
@@ -57,8 +78,9 @@ class ApiModule {
             }
         }
 
-    @Provides
-    @Singleton
+    fun provideOkHttpCache(context: Context): Cache
+            = Cache(File(context.cacheDir, "http-cache"), CACHE_SIZE)
+
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
@@ -69,8 +91,6 @@ class ApiModule {
         return interceptor
     }
 
-    @Provides
-    @Singleton
     fun provideHeadersInterceptor(
             authSharedPrefs: AuthSharedPrefs
     ): Interceptor {
@@ -92,15 +112,12 @@ class ApiModule {
         }
     }
 
-    @Provides
-    @Singleton
-    @BaseSourceApi("Mock")
     fun provideMockOkHttpClient(
-            @ApplicationContext context: Context,
+            context: Context,
+            cache: Cache,
             headersInterceptor: Interceptor,
             loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        val cache = Cache(File(context.cacheDir, "http-cache"), CACHE_SIZE)
         return OkHttpClient.Builder()
                 .addInterceptor(headersInterceptor)
                 .addInterceptor(loggingInterceptor)
@@ -114,15 +131,12 @@ class ApiModule {
                 .build()
     }
 
-    @Provides
-    @Singleton
-    @BaseSourceApi("Main")
     fun provideOkHttpClient(
-            @ApplicationContext context: Context,
+            context: Context,
+            cache: Cache,
             headersInterceptor: Interceptor,
             loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        val cache = Cache(File(context.cacheDir, "http-cache"), CACHE_SIZE)
         return OkHttpClient.Builder()
                 .addInterceptor(headersInterceptor)
                 .addInterceptor(loggingInterceptor)
@@ -135,20 +149,15 @@ class ApiModule {
                 .build()
     }
 
-    @Provides
-    @Singleton
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
     }
 
-    @Provides
-    @Singleton
-    @BaseSourceApi("Mock")
     fun provideMockRestAdapter(
-            @ApplicationContext context: Context,
-            @BaseSourceApi("Mock") okHttpClient: OkHttpClient,
+            context: Context,
+            okHttpClient: OkHttpClient,
             moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder()
@@ -159,12 +168,9 @@ class ApiModule {
                 .build()
     }
 
-    @Provides
-    @Singleton
-    @BaseSourceApi("Main")
     fun provideRestAdapter(
-            @ApplicationContext context: Context,
-            @BaseSourceApi("Main") okHttpClient: OkHttpClient,
+            context: Context,
+            okHttpClient: OkHttpClient,
             moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder()
@@ -175,21 +181,15 @@ class ApiModule {
                 .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideAuthApi(@BaseSourceApi("Mock") restAdapter: Retrofit): AuthApi {
+    fun provideAuthApi(restAdapter: Retrofit): AuthApi {
         return restAdapter.create(AuthApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun providePostApi(@BaseSourceApi("Mock") restAdapter: Retrofit): PostApi {
+    fun providePostApi(restAdapter: Retrofit): PostApi {
         return restAdapter.create(PostApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideUserApi(@BaseSourceApi("Main") restAdapter: Retrofit): UserApi {
+    fun provideUserApi(restAdapter: Retrofit): UserApi {
         return restAdapter.create(UserApi::class.java)
     }
 

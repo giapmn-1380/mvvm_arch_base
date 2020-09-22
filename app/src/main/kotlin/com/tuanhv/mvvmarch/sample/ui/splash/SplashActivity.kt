@@ -2,21 +2,17 @@ package com.tuanhv.mvvmarch.sample.ui.splash
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import com.tuanhv.mvvmarch.base.entity.User
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.ActivitySplashBinding
-import com.tuanhv.mvvmarch.sample.platform.SampleApplication
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 8/7/18.
  */
-@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     companion object {
@@ -29,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var splashBinding: ActivitySplashBinding
 
-    private val splashViewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

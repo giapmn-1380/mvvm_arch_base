@@ -10,12 +10,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentHomeNavBinding
 import com.tuanhv.mvvmarch.sample.ui.home.HomeActivity
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-@AndroidEntryPoint
 class HomeNavFragment : Fragment() {
 
     private lateinit var homeNavBinding: FragmentHomeNavBinding

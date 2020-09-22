@@ -2,7 +2,6 @@ package com.tuanhv.mvvmarch.sample.ui.home.fragment.login
 
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.tuanhv.mvvmarch.base.api.common.ErrorState
 import com.tuanhv.mvvmarch.base.api.common.rxjava.RetrofitObserver
@@ -15,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 /**
  * Created by hoang.van.tuan on 2/2/18.
  */
-class LoginViewModel @ViewModelInject constructor(
+class LoginViewModel constructor(
         private val authRepository: AuthRepository
 ) : ViewModel() {
 

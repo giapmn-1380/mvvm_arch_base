@@ -7,21 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.tuanhv.mvvmarch.sample.R
 import com.tuanhv.mvvmarch.sample.databinding.FragmentLoginBinding
 import com.tuanhv.mvvmarch.sample.ui.home.HomeActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.tuanhv.mvvmarch.sample.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 8/20/18.
  */
-@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
+
     private lateinit var loginBinding: FragmentLoginBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

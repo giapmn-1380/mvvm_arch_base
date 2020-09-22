@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuanhv.mvvmarch.base.entity.PaginatedEntities.Companion.REQUEST_ID_FIRST_TIME
@@ -19,13 +17,13 @@ import com.tuanhv.mvvmarch.sample.databinding.FragmentHomeFeedBinding
 import com.tuanhv.mvvmarch.sample.ui.main.MainActivity
 import com.tuanhv.mvvmarch.sample.ui.main.MainViewModel
 import com.tuanhv.mvvmarch.sample.ui.main.fragment.homefeed.adapter.PostAdapter
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by hoang.van.tuan on 9/14/20.
  */
-@AndroidEntryPoint
 class HomeFeedFragment : Fragment(),
         PostAdapter.OnItemClickListener, LoadMoreSimpleAdapter.OnLoadMoreListener {
 
@@ -33,13 +31,12 @@ class HomeFeedFragment : Fragment(),
         private const val TAG = "HomeFeedFragment"
     }
 
-    @Inject
-    lateinit var appManager: AppManager
+    private val appManager: AppManager by inject()
 
     private lateinit var homeFeedBinding: FragmentHomeFeedBinding
 
-    private val mainViewModel: MainViewModel by activityViewModels()
-    private val homeFeedViewModel: HomeFeedViewModel by viewModels()
+    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val homeFeedViewModel: HomeFeedViewModel by viewModel()
 
     private lateinit var postAdapter: PostAdapter
 

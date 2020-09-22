@@ -8,14 +8,11 @@ import com.tuanhv.mvvmarch.base.api.common.rxjava.retrofitResultResponseToResult
 import com.tuanhv.mvvmarch.base.entity.OauthToken
 import com.tuanhv.mvvmarch.base.util.rx.RxSchedulers
 import io.reactivex.Observable
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by hoang.van.tuan on 9/19/20.
  */
-@Singleton
-class AuthRemoteDataSource @Inject constructor(
+class AuthRemoteDataSource constructor(
         private val authApi: AuthApi,
         private val rxSchedulers: RxSchedulers
 ) {
