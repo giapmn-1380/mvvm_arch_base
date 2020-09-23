@@ -37,14 +37,16 @@ ext {
             hilt_jetpack  : '1.0.0-alpha02',
             estetho       : '1.5.1',
             glide         : '4.11.0',
+            firebase_core : '17.5.0',
             // debug
             chuck         : '1.1.0',
             multidex      : '2.0.1',
             // testing
             junit         : '4.13',
+            test_ext      : '1.1.2',
             robolectric   : '4.3',
             assertj       : '1.1.1',
-            mockito       : '2.27.0',
+            mockito       : '3.3.1',
             mockito_kotlin: '1.5.0',
             mockwebserver : '4.4.0',
             espresso      : '3.3.0',

@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'dagger.hilt.android.plugin'
+apply from: '../config/jacoco.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion project.hasProperty('ciBuild') ? rootProject.ext.minSdkVersion : rootProject.ext.targetSdkVersion
 
         versionCode rootProject.ext.app_version_code
         versionName rootProject.ext.app_version_name
@@ -75,10 +76,6 @@ android {
         androidTest.assets.srcDir mockAssetsDir
     }
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
-
     buildFeatures {
         dataBinding true
     }
@@ -100,6 +97,16 @@ android {
             includeAndroidResources = true
             returnDefaultValues = true
         }
+    }
+
+    aaptOptions {
+        cruncherEnabled project.hasProperty('ciBuild')
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+
+        preDexLibraries !project.hasProperty('ciBuild')
     }
 
 }
@@ -127,6 +134,9 @@ dependencies {
     // Navigation Component
     implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.ext.lib_versions.nav"
     implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.ext.lib_versions.nav"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$rootProject.ext.lib_versions.firebase_core"
 
     // Room
     implementation "androidx.room:room-runtime:$rootProject.ext.lib_versions.room"
@@ -177,6 +187,7 @@ dependencies {
 
     // androidTest
     // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.lib_versions.test_ext"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.lib_versions.support_test"
     androidTestImplementation "androidx.test:rules:$rootProject.ext.lib_versions.support_test"
     // Espresso dependencies
@@ -195,3 +206,5 @@ dependencies {
     }
     androidTestUtil "androidx.test:orchestrator:$rootProject.ext.lib_versions.orchestrator"
 }
+
+apply plugin: 'com.google.gms.google-services'
